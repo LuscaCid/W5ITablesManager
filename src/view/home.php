@@ -68,23 +68,31 @@
             {
                 const halfSize = this.handleSize / 2;
                 const handles = this.getHandles();
-
-                handles.forEach(([x, y]) => {
+                //percorrendo o array maior no foreach e como se espera apenas dois pontos (x,y), uma array de arrays
+                handles.forEach(({x, y}) => {
+                    console.log(x,y);
                     ctx.fillRect(x - halfSize, y - halfSize, this.handleSize, this.handleSize);
                 });
             }
-
             getHandles() 
             {
                 return [
-                    [this.x, this.y],                                // top-left
-                    [this.x + this.width / 2, this.y],               // top-center
-                    [this.x + this.width, this.y],                   // top-right
-                    [this.x, this.y + this.height / 2],              // middle-left
-                    [this.x + this.width, this.y + this.height / 2], // middle-right
-                    [this.x, this.y + this.height],                  // bottom-left
-                    [this.x + this.width / 2, this.y + this.height], // bottom-center
-                    [this.x + this.width, this.y + this.height]      // bottom-right
+                    {x : this.x, y : this.y},
+                    {x : this.x + this.width / 2, y : this.y},
+                    {x : this.x + this.width, y : this.y},
+                    {x : this.x, y : this.y + this.height / 2},
+                    {x : this.x + this.width, y : this.y + this.height / 2},
+                    {x : this.x, y : this.y + this.height},
+                    {x : this.x + this.width / 2, y : this.y + this.height},
+                    {x : this.x + this.width, y : this.y + this.height},
+                    //[this.x, this.y],                                // top-left
+                    //[this.x + this.width / 2, this.y],               // top-center
+                    //[this.x + this.width, this.y],                   // top-right
+                    //[this.x, this.y + this.height / 2],              // middle-left
+                    //[this.x + this.width, this.y + this.height / 2], // middle-right
+                    //[this.x, this.y + this.height],                  // bottom-left
+                    //[this.x + this.width / 2, this.y + this.height], // bottom-center
+                    //[this.x + this.width, this.y + this.height]      // bottom-right
                 ];
             }
 
@@ -101,7 +109,7 @@
 
                 for (let i = 0; i < handles.length; i++) 
                 {
-                    const [x, y] = handles[i];
+                    const {x, y} = handles[i];
                     if (Math.abs(x - mx) <= halfSize && Math.abs(y - my) <= halfSize) 
                     {
                         return { handleIndex: i, x, y };
