@@ -1,4 +1,49 @@
-function saveTables() {
+const canvas = document.getElementById('workbench');
+const ctx = canvas.getContext('2d');
+
+let isDragging = false;
+let selectedTable = null;
+let tables = [];
+
+interface ITableConfig 
+{
+    x : number
+    y : number
+    width : number
+    height : number
+    name : string
+}
+
+class Table implements ITableConfig{
+    height: number;
+    name: string;
+    width: number;
+    x: number;
+    y: number;
+
+    constructor({ height, name, width, x, y } : ITableConfig) {
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = height;
+        this.name = name;
+    }
+
+    draw() {
+        ctx.fillStyle = 'lightgrey';
+        ctx.fillRect(this.x, this.y, this.width, this.height);
+        ctx.strokeRect(this.x, this.y, this.width, this.height);
+        ctx.fillStyle = 'black';
+        ctx.fillText(this.name, this.x + 10, this.y + 20);
+    }
+
+    contains(mx: number, my: number) {
+        return (this.x <= mx) && (this.x + this.width >= mx) &&
+               (this.y <= my) && (this.y + this.height >= my);
+    }
+}
+
+function saveTables(tables : ITables) {
     const data = JSON.stringify(tables);
     fetch('backend.php', {
         method: 'POST',
@@ -17,19 +62,19 @@ function saveTables() {
     });
 }
 
-function loadTables() {
-    fetch('backend.php', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
-        },
-        body: 'action=load'
-    })
-    .then(response => response.json())
-    .then(data => {
-        tables = data.map(table => new Table(table.x, table.y, table.width, table.height, table.name));
-        draw();
-    });
-}
+// function loadTables() {
+//     fetch('backend.php', {
+//         method: 'POST',
+//         headers: {
+//             'Content-Type': 'application/x-www-form-urlencoded'
+//         },
+//         body: 'action=load'
+//     })
+//     .then(response => response.json())
+//     .then(data => {
+//         return data.map(table => new Table(table.x, table.y, table.width, table.height, table.name));
+//         draw();
+//     });
+// }
 
-document.addEventListener('DOMContentLoaded', loadTables);
+// document.addEventListener('DOMContentLoaded', loadTables);
