@@ -1,0 +1,12 @@
+{
+    "name": "builder/tables",
+    "description": "Tables creator to input these inside databvase",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "Builder\\Tables\\": "src/"
+        }
+    },
+    "minimum-stability": "stable",
+    "require": {}
+}
