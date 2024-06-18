@@ -1,8 +1,7 @@
 <?php
-namespace QueryBuilder\config;
-
-use PDO;
+namespace Tables\Builder\config;
 use PDOException;
+use PDO;
 
 class DbConnection 
 {
@@ -18,7 +17,6 @@ class DbConnection
         $database = $config["database"];
         $dbName   = $config["dbName"];
         $host     = $config["host"];
-        
         try {
 
             $this->PDO = new PDO("$database:host={$host};dbname={$dbName}", $username, $password);

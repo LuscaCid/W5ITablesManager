@@ -1,9 +1,9 @@
 <?php
-namespace QueryBuilder\config;
+namespace Tables\Builder\config;
 /**
  * @summary: implementacao do padrao singleton para lidar com apenas uma instancia desta classe para obter os mesmos dados do array de configuracoes do banco de dados e persistir mudanças
  * @author : Lucas Felipe Lima Cid <lucasfelipaaa@gmail.com>
- * @created : 08/06/2024
+ * @created : 18/06/2024
  */
 class DataBaseSettings 
 {
