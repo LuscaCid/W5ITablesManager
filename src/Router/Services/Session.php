@@ -1,5 +1,5 @@
 <?php
-namespace Tables\Builder\Router\Services;
+namespace Builder\Tables\Router\Services;
 class Session
 {
     public function __construct() 

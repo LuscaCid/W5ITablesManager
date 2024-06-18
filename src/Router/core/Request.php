@@ -1,5 +1,5 @@
 <?php 
-namespace Tables\Builder\Router\core;
+namespace Builder\Tables\Router\Core;
 
 class Request 
 {
@@ -25,7 +25,7 @@ class Request
      */
     public function getPath () 
     {
-        $path = $_REQUEST["PATH"];
+        $path =  $_SERVER["REQUEST_URI"];
         $afterBase = strpos($path, "//" );
         
         $path = strtolower(substr($path, $afterBase));

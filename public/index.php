@@ -1,16 +1,13 @@
 <?php
 
-use Tables\Builder\Router\Controllers\SessionController;
-use Tables\Builder\Router\core\Request;
-use Tables\Builder\Router\core\Router;
-use Tables\Builder\Router\DTO\SignInDTO;
-use Tables\Builder\Router\Services\Session;
+use Builder\Tables\Router\Controllers\SessionController;
+use Builder\Tables\Router\Core\BrowseRouter;
+use Builder\Tables\Router\Core\Request;
+use Builder\Tables\Router\Services\Session;
 
 require_once "../vendor/autoload.php";
 
 header("Allow-Control-Access-Origin: *");
-header("Content-type: Apliccation/json");
-
 date_default_timezone_set("America/Sao_Paulo");
 
 /**
@@ -19,16 +16,13 @@ date_default_timezone_set("America/Sao_Paulo");
 $dependenciesList = [
     SessionController::class => Session::class
 ];
-$DTOs = [
-    SignInDTO::class
-];
-$router = new Router(new Request, $dependenciesList, $DTOs);
 
-$router->get('/', [SessionController::class, "signin"]);
+$router = new BrowseRouter(new Request, $dependenciesList);
+
+$router->post('/', [SessionController::class, "signIn"]);
 
 //anotacao tipo laravel para obtencao da classe e do metodo correspondente na rota passada como primeiro parametro
 $router->get("/", [SessionController::class, "signIn"]);
 
-$requestMethod = $_SERVER["REQUEST_METHOD"];
-$post = $_POST;
-$auth = $_SERVER["HTTP_AUTHORIZATION"];
+
+$router->resolveRequest();

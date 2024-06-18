@@ -1,8 +1,8 @@
 <?php
-namespace Tables\Builder\Router\Controllers;
+namespace Builder\Tables\Router\Controllers;
 
-use Tables\Builder\Router\DTO\SignInDTO;
-use Tables\Builder\Router\Services\Session;
+use Builder\Tables\Router\DTO\SignInDTO;
+use Builder\Tables\Router\Services\Session;
 
 class SessionController 
 {
@@ -13,8 +13,14 @@ class SessionController
     }
     public function signIn(SignInDTO $data) 
     {   
-        $username = $data->username;
+        $username = $data->email;
         $password = $data->password;
+
+        var_dump($username);
         //continuacao da logica para realizar login
+    }
+    public function render() 
+    {
+        
     }
 }

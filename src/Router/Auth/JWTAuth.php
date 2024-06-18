@@ -1,6 +1,6 @@
 <?php 
 
-namespace Tables\Builder\Router\Auth;
+namespace Builder\Tables\Router\Auth;
 
 use Exception;
 use Firebase\JWT\JWT;
