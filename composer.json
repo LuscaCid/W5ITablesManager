@@ -4,8 +4,9 @@
     "type": "project",
     
     "autoload": {
+        "classmap": ["src/"],
         "psr-4": {
-            "Builder\\Tables\\": "src/"
+            "TablesBuilder\\": "src/"
         }
     },
     "minimum-stability": "stable",

@@ -1,6 +1,6 @@
 <?php
 
-namespace Builder\Tables\Router\DTO;
+namespace TablesBuilder\Router\DTO;
 
 class SignUpDTO 
 {

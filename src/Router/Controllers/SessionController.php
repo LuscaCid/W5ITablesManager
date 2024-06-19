@@ -1,8 +1,9 @@
 <?php
-namespace Builder\Tables\Router\Controllers;
+namespace TablesBuilder\Router\Controllers;
 
-use Builder\Tables\Router\DTO\SignInDTO;
 use Builder\Tables\Router\Services\Session;
+use TablesBuilder\Router\DTO\SignInDTO;
+use TablesBuilder\Router\DTO\TestDTO;
 
 class SessionController 
 {
@@ -22,5 +23,9 @@ class SessionController
     public function render() 
     {
         
+    }
+    public function test(TestDTO $test) 
+    {
+        echo json_encode($test);
     }
 }

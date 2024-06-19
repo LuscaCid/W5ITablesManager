@@ -1,6 +1,6 @@
 <?php
 
-namespace Builder\Tables\Router\DTO;
+namespace TablesBuilder\Router\DTO;
 
 /**
  * @summary: A ideia é obter as keys atraves desta tipagem usando classe, onde as propriedades sao buscadas dentro das variaveis super globais 

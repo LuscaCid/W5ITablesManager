@@ -1,5 +1,5 @@
 <?php 
-namespace Builder\Tables\Router\Core;
+namespace TablesBuilder\Router\Core;
 
 class Request 
 {

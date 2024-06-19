@@ -1,6 +1,6 @@
 <?php 
 
-namespace Builder\Tables\Router\Core;
+namespace TablesBuilder\Router\Core;
 
 use ReflectionMethod;
 
@@ -62,32 +62,49 @@ class BrowseRouter
                 $reflected = new ReflectionMethod($class, $method);
 
                 $parameters = $reflected->getParameters();
+                
                 $args = [];
-                foreach ($parameters as $parameter) 
+                
+                if(!empty($parameters)) 
                 {
-                    $type = $parameter->getType();
-                    $classes = $this->getArrClasses();
-
-                    $index = array_search($type->getName(), $classes);
-                    $typeName = $classes[$index] ?? NULL;
-
-                    if ($type && !$type->isBuiltin() && $typeName) 
+                    foreach ($parameters as $parameter) 
                     {
-                        $instance = new $typeName;
-
-                        //para obter as (propriedades) do objeto é necessário passar uma instancia da classe
-                        $toArr = get_object_vars($instance);
-
-                        $keys = array_keys($toArr);
+                        $type = $parameter->getType();
                         
-                        foreach ($keys as $key) 
+                        //inclue as classes para resignificar o class_exists
+                        $classes = $this->getArrClasses();
+
+                        $index = array_search($type->getName(), $classes);
+                        
+                        $typeName = $classes[$index] ?? NULL;
+                        
+                        $exists = class_exists($typeName);
+                        if (!$type->isBuiltin() && $typeName) 
                         {
-                            $instance->$key = $_POST[$key];
+                            $instance = new \ReflectionClass($typeName);
+                            $instance = $instance->newInstance();
+                            
+                            //para obter as (propriedades) do objeto é necessário passar uma instancia da classe
+                            $toArr = get_object_vars($instance);
+    
+                            $keys = array_keys($toArr);
+                            
+                            foreach ($keys as $key) 
+                            {
+                                $requestData = $this->request->getData();
+                                $instance->$key = $requestData[$key];
+                            }
+                            $args[] = $instance;
                         }
-                        $args[] = $instance;
                     }
                 }
+            if(!empty($args)) 
+            {
                 $controller->$method(...$args);
+            } else 
+            {
+                $controller->$method();
+            }
             }
         } else
         {
@@ -110,12 +127,16 @@ class BrowseRouter
             foreach ($arquivos as $arquivo) 
             {
                 if($arquivo == "." || $arquivo == "..")continue; 
+                
                 $completeDir = $directory . DIRECTORY_SEPARATOR . $arquivo;
                 $data = file_get_contents($completeDir);
 
                 $pattern = "/class\s+([a-zA-Z_\x80-\xff][a-zA-Z0-9_\x80-\xff]*)\s*/";
-
-                preg_match_all($pattern, $data, $classes, 0, 1);
+                
+                if (preg_match_all($pattern, $data, $matches)) 
+                {
+                    $classes = array_merge($classes, $matches[1]);
+                };
             }    
         };
         return $classes;
