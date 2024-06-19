@@ -78,20 +78,19 @@ class BrowseRouter
                         
                         $typeName = $classes[$index] ?? NULL;
                         
-                        $exists = class_exists($typeName);
                         if (!$type->isBuiltin() && $typeName) 
                         {
-                            $instance = new \ReflectionClass($typeName);
-                            $instance = $instance->newInstance();
+                            $class = new \ReflectionClass($typeName);
+                            $instance = $class->newInstance();
                             
                             //para obter as (propriedades) do objeto é necessário passar uma instancia da classe
                             $toArr = get_object_vars($instance);
     
                             $keys = array_keys($toArr);
                             
+                            $requestData = $this->request->getData();
                             foreach ($keys as $key) 
                             {
-                                $requestData = $this->request->getData();
                                 $instance->$key = $requestData[$key];
                             }
                             $args[] = $instance;
@@ -117,7 +116,7 @@ class BrowseRouter
     private function getArrClasses() 
     {
         $root = __DIR__;
-        $directory = str_replace( "Core","DTO", $root);;
+        $directory = str_replace("Core","DTO", $root);
         $classes = [];
         
         if(is_dir($directory)) 
@@ -129,6 +128,7 @@ class BrowseRouter
                 if($arquivo == "." || $arquivo == "..")continue; 
                 
                 $completeDir = $directory . DIRECTORY_SEPARATOR . $arquivo;
+                include_once $completeDir;
                 $data = file_get_contents($completeDir);
 
                 $pattern = "/class\s+([a-zA-Z_\x80-\xff][a-zA-Z0-9_\x80-\xff]*)\s*/";

@@ -4,7 +4,7 @@
     "type": "project",
     
     "autoload": {
-        "classmap": ["src/"],
+        "classmap": ["./src/**/*.php"],
         "psr-4": {
             "TablesBuilder\\": "src/"
         }
